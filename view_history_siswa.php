@@ -34,14 +34,9 @@ include("bar/navbar.php");
 
             <tbody>
                 <?php
-                if(isset($_SESSION['nis'])) {
                     $nis = $_SESSION['nis'];
                     $querypay = mysqli_query($koneksi, "SELECT * FROM tb_pembayaran INNER JOIN tb_siswa USING(nis) INNER JOIN tb_petugas USING(nip) WHERE nis = '$nis'");
-                } else{
-                    $querypay = mysqli_query($koneksi, "SELECT * FROM tb_pembayaran INNER JOIN tb_siswa USING(nis) INNER JOIN tb_petugas USING(nip) WHERE jumlah_bayar IS NOT NULL");
-                }
-
-                while ($datapay = mysqli_fetch_assoc($querypay)) {
+                    while ($datapay = mysqli_fetch_assoc($querypay)) {
                 ?>
                     <tr>
                         <td><?php echo $datapay['namapetugas'] ?></td>

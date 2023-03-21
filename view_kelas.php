@@ -19,11 +19,8 @@
         <div class="table-tittle">
             <h1>DATA KELAS</h1>
             <div class="tittle-right">
-                <form action="">
-                    <?php 
-                    $search = isset($_POST['search']) ? mysqli_real_escape_string($koneksi, $_POST['search']) : '';
-                ?>
-                    <input type="text" name="cari" placeholder="Cari Data">
+            <form action="" method="POST">
+                    <input type="text" name="cari" placeholder="Cari Data Berdasarkan Nama Kelas">
                     <button type="submit">Cari</button>
                 </form>
                 <a href="insert_kelas.php">Tambahkan Data +</a>
@@ -39,8 +36,13 @@
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                    $query = "SELECT * FROM tb_kelas ORDER BY namakelas ASC";
+                <?php
+                    if (isset($_POST['cari'])) {
+                        $keyword = $_POST['cari'];
+                        $query = "SELECT * FROM tb_kelas WHERE namakelas LIKE '%$keyword%' ORDER BY namakelas ASC";
+                    } else {
+                        $query = "SELECT * FROM tb_kelas ORDER BY namakelas ASC";
+                    }
                     $result = mysqli_query($koneksi, $query);
 
                     if(!$result) {

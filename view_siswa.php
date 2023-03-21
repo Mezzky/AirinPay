@@ -17,11 +17,8 @@
         <div class="table-tittle">
             <h1>DATA SISWA</h1>
             <div class="tittle-right">
-                <?php 
-                    $search = isset($_POST['search']) ? mysqli_real_escape_string($koneksi, $_POST['search']) : '';
-                ?>
-                <form action="">
-                    <input type="text" name="cari" placeholder="Cari Data">
+                <form action="" method="POST">
+                    <input type="text" name="cari" placeholder="Cari Data Berdasarkan Nama Siswa">
                     <button type="submit">Cari</button>
                 </form>
                 <a href="insert_siswa.php">Tambah Data +</a>
@@ -43,7 +40,12 @@
             
             <tbody>
                 <?php 
-                $query = "SELECT * FROM tb_siswa INNER JOIN tb_kelas USING(idkelas)"; 
+                if (isset($_POST['cari'])) {
+                    $keyword = $_POST['cari'];
+                    $query = "SELECT * FROM tb_siswa INNER JOIN tb_kelas USING(idkelas) WHERE namasiswa LIKE '%$keyword%'"; 
+                } else {
+                    $query = "SELECT * FROM tb_siswa INNER JOIN tb_kelas USING(idkelas)"; 
+                }
                 $result = mysqli_query($koneksi, $query);
 
                 if (!$result){
@@ -51,7 +53,6 @@
                 }
 
                 $no = 1;
-
                 while($row = mysqli_fetch_assoc($result)){
                 ?>
 
