@@ -19,11 +19,8 @@
         <div class="table-tittle">
             <h1>DATA PETUGAS</h1>
             <div class="tittle-right">
-                <?php 
-                    $search = isset($_POST['search']) ? mysqli_real_escape_string($koneksi, $_POST['search']) : '';
-                ?>
-                <form action="">
-                    <input type="text" name="cari" placeholder="Cari Data">
+                <form action="" method="POST">
+                    <input type="text" name="cari" placeholder="Cari Data Berdasarkan Nama Petugas">
                     <button type="submit">Cari</button>
                 </form>
                 <a href="insert_petugas.php" class="insert-btn">Tambahkan Data +</a>
@@ -43,16 +40,20 @@
             </thead>
             <tbody>
                 <?php
+                    if (isset($_POST['cari'])) {
+                        $keyword = $_POST['cari'];
+                        $query = "SELECT * FROM tb_petugas WHERE namapetugas LIKE '%$keyword%' ORDER BY nip ASC";
+                    } else {
                         $query = "SELECT * FROM tb_petugas ORDER BY nip ASC";
-                        $result = mysqli_query($koneksi, $query);
-        
-                        if(!$result){
-                            die("Query Error : " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
-                        }
-        
-                        while($row = mysqli_fetch_assoc($result)){
-                        
-                    ?>
+                    }
+                    $result = mysqli_query($koneksi, $query);
+    
+                    if(!$result){
+                        die("Query Error : " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
+                    }
+    
+                    while($row = mysqli_fetch_assoc($result)){
+                ?>
 
                 <tr>
                     <td><?php echo $row['nip']; ?></td>

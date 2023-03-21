@@ -19,11 +19,8 @@
         <div class="table-tittle">
             <h1>DATA SPP</h1>
             <div class="tittle-right">
-                <?php 
-                    $search = isset($_POST['search']) ? mysqli_real_escape_string($koneksi, $_POST['search']) : '';
-                ?>
-                <form action="">
-                    <input type="text" name="cari" placeholder="Cari Data">
+                <form action="" method="POST">
+                    <input type="text" name="cari" placeholder="Cari Data Berdasarkan Tahun Angkatan">
                     <button type="submit">Cari</button>
                 </form>
                 <a href="insert_spp.php">Tambah Data +</a>
@@ -42,7 +39,12 @@
 
             <tbody>
                 <?php
-                    $query = "SELECT * FROM tb_spp ORDER BY idspp ASC";
+                    if (isset($_POST['cari'])) {
+                        $keyword = $_POST['cari'];
+                        $query = "SELECT * FROM tb_spp WHERE tahun_angkatan LIKE '%$keyword%' ORDER BY idspp ASC";
+                    } else {
+                        $query = "SELECT * FROM tb_spp ORDER BY idspp ASC";
+                    }
                     $result = mysqli_query($koneksi, $query);
     
                     if(!$result) {

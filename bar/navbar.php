@@ -58,8 +58,7 @@
                 <span>Logout</span>
             </a>
             <?php } ?>
-            <?php } elseif (@($_SESSION['nis'])){ ?>
-                <?php if($_SESSION['nis'] = 'nis') { ?>
+            <?php } elseif (isset($_SESSION['nis'])) { ?>
             <a href="home_siswa.php">
                 <span>Home</span>
             </a>
@@ -69,7 +68,6 @@
             <a href="logout.php">
                 <span>Logout</span>
             </a>
-            <?php } ?>
             <?php } ?>
                 
         </nav>
